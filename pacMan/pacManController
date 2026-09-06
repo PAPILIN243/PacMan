@@ -1,0 +1,40 @@
+package edu.upb.lp.game.pacMan;
+
+import edu.upb.lp.game.core.GameController;
+import edu.upb.lp.game.core.GameUI;
+
+public class pacManController implements GameController {
+	private GameUI libreria;
+	public pacManController(GameUI libreria) {
+				this.libreria = libreria;
+	}
+
+	@Override
+	public void onButtonPressed(String name) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCellPressed(int row, int col) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCommand(String command) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void initialiseInterface() {
+libreria.configureGrid(36,28 , 8, 8, true);	
+for(int r=0;r<36;r++) {
+	for(int c=0;c<28;c++) {
+		String nombreImagen = "MAPA_r"+(r+1)+"_c"+(c+1);
+libreria.setCellBackgroundImage(r, c, nombreImagen);
+}}
+	}
+
+}
