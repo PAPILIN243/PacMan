@@ -29,8 +29,7 @@ public class PacMan {
 		game.borrarPacman(filas, columnas);
 	}
 
-	public void moverArriba() {
-		//&& filas==1 || filas==2 || filas==3 || filas==4 || filas==5 || filas==6 || filas==7 || filas==8 || filas==9 || filas==10 || filas==11 || filas==12 || filas==13 || filas==14 || filas==15 || filas==16 || filas==17 
+	public void moverArriba() { 
 		if (game.puedoIrAhi(filas-1, columnas)) {
 			game.borrarPacman(filas, columnas);
 			filas--;
