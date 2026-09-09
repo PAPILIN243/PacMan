@@ -1,21 +1,22 @@
 package edu.upb.lp.game.pacMan;
 
 public class PacMan {
-	private int direccion = 0;// 0= arriba,1= derecha, 2= abajo, 3= izquierda
-	private int filas = 10;
-	private int columnas = 15;
-	private  PacManGame game;
-	private PacManGame PacManGame;
-	
-	public PacMan(int filas, int columnas) {
+	private int direccion = 1;// 0= arriba,1= derecha, 2= abajo, 3= izquierda
+	private int filas;
+	private int columnas;
+	private PacManGame game;
+
+	public PacMan(int filas, int columnas, PacManGame game) {
 
 		this.filas = filas;
 		this.columnas = columnas;
-		this.PacManGame = game;
+		this.game = game;
 	}
+
 	public int getDireccion() {
 		return direccion;
 	}
+
 	public int getFilas() {
 		return filas;
 	}
@@ -26,23 +27,47 @@ public class PacMan {
 
 	public void borrarPacman(int filas, int columnas) {
 		game.borrarPacman(filas, columnas);
-	}	
-	
-	public void MoverDerecha() {
-//		game.borrarPacman(filas, columnas);
-		if (columnas + 1 < 32) {
-			columnas++;
-			direccion = 1;
+	}
+
+	public void moverArriba() {
+		//&& filas==1 || filas==2 || filas==3 || filas==4 || filas==5 || filas==6 || filas==7 || filas==8 || filas==9 || filas==10 || filas==11 || filas==12 || filas==13 || filas==14 || filas==15 || filas==16 || filas==17 
+		if (game.puedoIrAhi(filas-1, columnas)) {
+			game.borrarPacman(filas, columnas);
+			filas--;
 		}
+		direccion = 0;
 		game.dibujarPacman(filas, columnas, direccion);
 	}
-	public void MoverIzquierda() {
-//		game.borrarPacman(filas, columnas);
-		if (columnas + 1 < 32) {
-			columnas--;
-			direccion = 3 ;
+// 0arriba 1derecha 2abajo 3izq 
+	public void moverDerecha() {
+		if (game.puedoIrAhi(filas, columnas+1)) {
+			game.borrarPacman(filas, columnas);
+			columnas++;
 		}
+		direccion = 1;
 		game.dibujarPacman(filas, columnas, direccion);
 	}
 
+	public void moverAbajo() {
+		if (game.puedoIrAhi(filas+1, columnas)) {
+			game.borrarPacman(filas, columnas);
+			filas++;
+		}
+		direccion = 2;
+		game.dibujarPacman(filas, columnas, direccion);
 	}
+
+	public void moverIzquierda() {
+		if (game.puedoIrAhi(filas, columnas-1)) {
+			game.borrarPacman(filas, columnas);
+			columnas--;
+		}
+		direccion = 3;
+		game.dibujarPacman(filas, columnas, direccion);
+	}
+
+	public void mover(int direccion2, int filas2, int columnas2) {
+		// TODO Auto-generated method stub
+
+	}
+}
