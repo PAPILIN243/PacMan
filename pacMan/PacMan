@@ -1,0 +1,48 @@
+package edu.upb.lp.game.pacMan;
+
+public class PacMan {
+	private int direccion = 0;// 0= arriba,1= derecha, 2= abajo, 3= izquierda
+	private int filas = 10;
+	private int columnas = 15;
+	private  PacManGame game;
+	private PacManGame PacManGame;
+	
+	public PacMan(int filas, int columnas) {
+
+		this.filas = filas;
+		this.columnas = columnas;
+		this.PacManGame = game;
+	}
+	public int getDireccion() {
+		return direccion;
+	}
+	public int getFilas() {
+		return filas;
+	}
+
+	public int getColumnas() {
+		return columnas;
+	}
+
+	public void borrarPacman(int filas, int columnas) {
+		game.borrarPacman(filas, columnas);
+	}	
+	
+	public void MoverDerecha() {
+//		game.borrarPacman(filas, columnas);
+		if (columnas + 1 < 32) {
+			columnas++;
+			direccion = 1;
+		}
+		game.dibujarPacman(filas, columnas, direccion);
+	}
+	public void MoverIzquierda() {
+//		game.borrarPacman(filas, columnas);
+		if (columnas + 1 < 32) {
+			columnas--;
+			direccion = 3 ;
+		}
+		game.dibujarPacman(filas, columnas, direccion);
+	}
+
+	}
