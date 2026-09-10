@@ -1,6 +1,7 @@
 package edu.upb.lp.game.pacMan;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PacManGame {
@@ -28,13 +29,13 @@ public class PacManGame {
 	
 
 	private List<Fruta> listaFrutas;
-	private List<Fruta> frutasRecolectadas;
+	//private List<Fruta> frutasRecolectadas;
 
 	public PacManGame(PacManController controller) {
         this.controller = controller; 
         this.pacman = new PacMan(10, 15, this);
-        this.listaFrutas = new ArrayList<>();
-        this.frutasRecolectadas = new ArrayList<>();
+        this.listaFrutas = new LinkedList<>();
+        //this.frutasRecolectadas = new ArrayList<>();
         
         inicializarFrutas();
     }
@@ -89,7 +90,7 @@ public class PacManGame {
 
 	public void recolectarFruta(Fruta fruta) {
         listaFrutas.remove(fruta);              
-        frutasRecolectadas.add(fruta);          
+       // frutasRecolectadas.add(fruta);          
         controller.borrarPacman(fruta.getFila(), fruta.getColumna()); 
         fruta.aplicarPoder(this);                
     }
@@ -97,10 +98,6 @@ public class PacManGame {
 	public List<Fruta> getListaFrutas() {
         return listaFrutas;
     }
-
-	public List<Fruta> getFrutasRecolectadas() {
-		return frutasRecolectadas;
-	}
 
 	public int getFilas() {
 		return filas;
@@ -112,7 +109,7 @@ public class PacManGame {
 
 	private void inicializarFrutas() {
 		listaFrutas.add(new Cereza(1, 1));
-        listaFrutas.add(new Piña(4, 5));
+        listaFrutas.add(new Pina(4, 5));
         listaFrutas.add(new Manzana(8, 12));
         listaFrutas.add(new Uva(10, 18));
     }
