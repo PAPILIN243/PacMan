@@ -1,0 +1,12 @@
+package edu.upb.lp.game.pacMan;
+
+public class Cereza extends Fruta {
+    public Cereza(int fila, int columna) {
+        super("Cereza", fila, columna);
+    }
+
+    @Override
+    public void aplicarPoder(PacManGame game) {
+        //suma puntos al juego
+    }
+}
