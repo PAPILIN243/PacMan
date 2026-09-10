@@ -1,0 +1,15 @@
+package edu.upb.lp.game.pacMan;
+
+public class AvanzadorDePacman implements Runnable {
+	private PacMan pacman;
+
+	public AvanzadorDePacman(PacMan pacman) {
+		this.pacman = pacman;
+	}
+
+	@Override
+	public void run() {
+		pacman.avanzarPacman();
+	}
+
+}
