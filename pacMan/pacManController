@@ -4,22 +4,24 @@ import edu.upb.lp.game.core.GameController;
 import edu.upb.lp.game.core.GameUI;
 
 public class PacManController implements GameController {
-	private GameUI libreria;
-	private PacManGame game;
+    private GameUI libreria;
+    private PacManGame game;
 
-	public PacManController(GameUI libreria) {
-		this.libreria = libreria;
-		this.game = new PacManGame(this);
-	}
+    public PacManController(GameUI libreria) {
+        this.libreria = libreria;
+        this.game = new PacManGame(this);
+    }
 
 	@Override
 	public void onButtonPressed(String name) {
 		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public void onCellPressed(int row, int col) {
 		// TODO Auto-generated method stub
+
 	}
 
 	@Override
@@ -48,24 +50,22 @@ public class PacManController implements GameController {
 				libreria.setCellBackgroundImage(r, c, nombreImagen);
 			}
 		}
-
 		libreria.setCellObjectImage(10, 15, "pacman_arriba");
-
+		
+		
 		// Vincular las teclas del teclado
-		libreria.bindKey("W", "MoverArriba");
-		libreria.bindKey("S", "MoverAbajo");
-		libreria.bindKey("A", "MoverIzquierda");
-		libreria.bindKey("D", "MoverDerecha");
-		libreria.bindKey("P", "Mover");
-		libreria.playSound("Pacman_Introduction");
-		libreria.executeLater(new Runnable() {
-			@Override
-			public void run() {
-				game.start(); // Esto inicia el movimiento automático repetido
+				libreria.bindKey("W", "MoverArriba");
+				libreria.bindKey("S", "MoverAbajo");
+				libreria.bindKey("A", "MoverIzquierda");
+				libreria.bindKey("D", "MoverDerecha");
+				libreria.bindKey("P", "Mover");
+				libreria.executeLater(new Runnable() {
+					@Override
+					public void run() {
+						game.start(); // Esto inicia el movimiento automático repetido
+					}
+				}, 4500);
 			}
-		}, 4500);
-	}
-
 
 	public void dibujarPacman(int filas, int columnas, int direccion) {
 		String pacmanImg = "pacman_arriba";
@@ -87,5 +87,8 @@ public class PacManController implements GameController {
 
 	public void executeRepeatedly(Runnable r, int ms) {
 		libreria.executeRepeatedly(r, ms);
+	}
+	public void dibujarFruta(int fila, int columna, String nombreFruta) {
+	    libreria.setCellObjectImage(fila, columna, nombreFruta);
 	}
 }
