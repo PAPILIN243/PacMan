@@ -1,0 +1,16 @@
+package edu.upb.lp.game.pacMan;
+
+public class Manzana extends Fruta {
+
+	public Manzana(int fila, int columna) {
+		super("Manzana", fila, columna);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void aplicarPoder(PacManGame game) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
