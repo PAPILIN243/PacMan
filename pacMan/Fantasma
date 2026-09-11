@@ -1,0 +1,87 @@
+package edu.upb.lp.game.pacMan;
+
+import java.util.Random;
+
+public class Fantasma {
+	private int fila;
+	private int columna;
+	private int direccion = 0; // 0= arriba, 1= derecha, 2= abajo, 3= izquierda
+	private int color = 0; // 0=rojo, 1=rosa, 2=celeste, 3=naranja
+	private PacManGame game;
+	private Random rnd = new Random();
+
+	public Fantasma(int fila, int columna, int direccion, int color, PacManGame game) {
+		this.fila = fila;
+		this.columna = columna;
+		this.direccion = direccion;
+		this.color = color;
+		this.game = game;
+	}
+
+	public int getDireccion() {
+		return direccion;
+	}
+
+	public int getFilas() {
+		return fila;
+	}
+
+	public int getColumnas() {
+		return columna;
+	}
+	
+	public void dibujar() {
+		game.dibujarFantasma(fila, columna, "fantasma_"+color+"_"+direccion);
+	}
+
+	public void borrar() {
+		game.borrarFantasma(fila, columna);
+	}
+
+	public void girar() {
+		//TODO Ver en las tres direcciones si es que puede avanzar hacia ahí
+		//Entre todas donde pueda, seleccionar aleatoriamente
+		direccion = rnd.nextInt(4);
+		dibujar();
+	}
+
+	public void avanzarFantasma() {
+		game.borrarFantasma(fila, columna);
+		girar();
+		if (direccion == 0) {
+			if (game.puedoIrAhi(fila - 1, columna)) {
+				game.borrarFantasma(fila, columna);
+				fila--;
+			}
+		} else if (direccion == 1) {
+			if (fila == 8 && columna == 31) {
+				game.borrarFantasma(fila, columna);
+				columna = 0;
+			} else if (game.puedoIrAhi(fila, columna + 1)) {
+				game.borrarFantasma(fila, columna);
+				columna++;
+			}
+		} else if (direccion == 2) {
+			if (game.puedoIrAhi(fila + 1, columna)) {
+				game.borrarFantasma(fila, columna);
+				fila++;
+			}
+		} else if (direccion == 3) {
+			if (fila == 8 && columna == 0) {
+				game.borrarFantasma(fila, columna);
+				columna = 31;
+			} else if (game.puedoIrAhi(fila, columna - 1)) {
+				game.borrarFantasma(fila, columna);
+				columna--;
+			}
+		} else {
+			throw new IllegalStateException("");
+		}
+		dibujar();
+	}
+
+	public void comenzarMovimiento() {
+		// TODO Auto-generated method stub
+		
+	}
+}
