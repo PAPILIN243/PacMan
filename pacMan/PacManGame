@@ -1,51 +1,60 @@
 package edu.upb.lp.game.pacMan;
 
-//import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class PacManGame {
-	private int filas = 17;
-    private int columnas = 32;
-	private int[][] mapa = {{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-							{0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0},
-							{0,2,0,0,0,0,2,0,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,2,0,0,0,0,2,0},
-							{0,2,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,2,0},
-							{0,2,2,2,2,2,0,2,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,2,0,2,2,2,2,2,0},
-							{0,0,0,0,0,2,0,2,2,2,2,0,2,2,2,0,0,2,2,2,0,2,2,2,2,0,2,0,0,0,0,0},
-							{0,0,0,0,0,2,0,0,0,0,2,0,2,2,2,2,2,2,2,2,0,2,0,0,0,0,2,0,0,0,0,0},
-							{0,0,0,0,0,2,0,0,0,0,2,0,2,0,0,0,0,0,0,2,0,2,0,0,0,0,2,0,0,0,0,0},
-							{2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2},
-							{0,0,0,0,0,2,0,0,0,0,2,0,2,0,0,0,0,0,0,2,0,2,0,0,0,0,2,0,0,0,0,0},
-							{0,0,0,0,0,2,0,0,0,0,2,0,2,2,2,2,2,2,2,2,0,2,0,0,0,0,2,0,0,0,0,0},
-							{0,0,0,0,0,2,0,2,2,2,2,0,2,0,0,0,0,0,0,2,0,2,2,2,2,0,2,0,0,0,0,0},
-							{0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0},
-							{0,2,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,2,0},
-							{0,2,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,2,0},
-							{0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0},
-							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
-	private PacMan pacman;
-	private PacManController controller;
-	
 
+	private int[][] mapa = {
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
+			{ 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0 },
+			{ 0, 2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 2, 0 },
+			{ 0, 2, 2, 2, 2, 2, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 2, 2, 2, 2, 2, 0 },
+			{ 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 2, 0, 2, 2, 2, 0, 0, 2, 2, 2, 0, 2, 2, 2, 2, 0, 2, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 },
+			{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
+			{ 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 2, 0, 2, 0, 0, 0, 0, 0 },
+			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
+			{ 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0 },
+			{ 0, 2, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 0 },
+			{ 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
+	private PacMan pacman;
+	private Fantasma fantasma;
+	private PacManController controller;
+	private int score = 0;
 	private List<Fruta> listaFrutas;
-	//private List<Fruta> frutasRecolectadas;
+	private Fantasma[] listaFant = new Fantasma[4];
 
 	public PacManGame(PacManController controller) {
-        this.controller = controller; 
-        this.pacman = new PacMan(10, 15, this);
-        this.listaFrutas = new LinkedList<>();
-        //this.frutasRecolectadas = new ArrayList<>();
-        
-        inicializarFrutas();
-    }
+		this.controller = controller;
+		this.pacman = new PacMan(10, 15, this);
 
-	public void dibujarPacman(int filas, int columnas, int direccion) {
-		controller.dibujarPacman(filas, columnas, direccion);
+		this.listaFrutas = new LinkedList<>();
+		inicializarFrutas();
 	}
 
-	public void borrarPacman(int filas, int columnas) {
-		controller.borrarPacman(filas, columnas);
+	// 0 = pared; 1= camino vacio; 2= camino lleno
+
+	public void dibujarPacman(int fila, int columna, int direccion) {
+		if (mapa[fila][columna] == 2) {
+			mapa[fila][columna] = 1;
+			score++;
+			if (score == 1000) {
+				pacman.detenerse();
+				controller.dibujarFruta(0, 0, "bugs_happy_bug");
+			}
+		}
+		controller.dibujarPacman(fila, columna, direccion);
+	}
+	//
+
+	public void borrarPacman(int fila, int columna) {
+		controller.borrarPacman(fila, columna);
 	}
 
 	public void girarArriba() {
@@ -72,45 +81,65 @@ public class PacManGame {
 		return mapa[v][h] > 0;
 	}
 
-	public void executeRepeatedly(Runnable r, int ms) {
-		controller.executeRepeatedly(r, ms);
+	public String executeRepeatedly(Runnable r, int ms) {
+		return controller.executeRepeatedly(r, ms);
 	}
 
 	public void start() {
 		pacman.comenzarAAvanzar();
-		dibujarFrutas(); //inicio dle juego
+		dibujarFrutas();
+		inicializarFantasmas();
 	}
 
 	public void dibujarFrutas() {
-	    for (int i = 0; i < listaFrutas.size(); i++) {
-	        Fruta f = listaFrutas.get(i);
-	        controller.dibujarFruta(f.getFila(), f.getColumna(), f.getNombre());
-	    }
+		for (int i = 0; i < listaFrutas.size(); i++) {
+			Fruta f = listaFrutas.get(i);
+			controller.dibujarFruta(f.getFila(), f.getColumna(), f.getNombre());
+		}
 	}
 
-	public void recolectarFruta(Fruta fruta) {
-        listaFrutas.remove(fruta);              
-       // frutasRecolectadas.add(fruta);          
-        controller.borrarPacman(fruta.getFila(), fruta.getColumna()); 
-        fruta.aplicarPoder(this);                
-    }
+	public int getValor(int fila, int columna) {
+		return this.mapa[fila][columna];
+	}
+
+	public void setValor(int fila, int columna, int valor) {
+		this.mapa[fila][columna] = valor;
+	}
+
+	public boolean hayPunto(int r, int c) {
+		return mapa[r][c] == 2;
+	}
+
+	public void stopLoop(String id) {
+		controller.stopLoop(id);
+	}
 
 	public List<Fruta> getListaFrutas() {
-        return listaFrutas;
-    }
-
-	public int getFilas() {
-		return filas;
-	}
-
-	public int getColumnas() {
-		return columnas;
+		return listaFrutas;
 	}
 
 	private void inicializarFrutas() {
 		listaFrutas.add(new Cereza(1, 1));
-        listaFrutas.add(new Pina(4, 5));
-        listaFrutas.add(new Manzana(8, 12));
-        listaFrutas.add(new Uva(10, 18));
-    }
+		listaFrutas.add(new Pina(4, 5));
+		listaFrutas.add(new Manzana(8, 12));
+		listaFrutas.add(new Uva(10, 18));
+	}
+
+	private void inicializarFantasmas() {
+		for (int i = 0; i < 4; i++) {
+			listaFant[i]=new Fantasma(8, 15+i, 0, i,this);	
+			listaFant[i].dibujar();
+			listaFant[i].comenzarMovimiento();
+		}
+	}
+
+	public void borrarFantasma(int fila, int columna) {
+		controller.borrarFantasma(fila,columna);
+		
+	}
+
+	public void dibujarFantasma(int fila, int columna, String imagen) {
+		controller.dibujarFantasma(fila, columna, imagen);
+		
+	}
 }
