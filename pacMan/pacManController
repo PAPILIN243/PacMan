@@ -4,24 +4,22 @@ import edu.upb.lp.game.core.GameController;
 import edu.upb.lp.game.core.GameUI;
 
 public class PacManController implements GameController {
-    private GameUI libreria;
-    private PacManGame game;
+	private GameUI libreria;
+	private PacManGame game;
 
-    public PacManController(GameUI libreria) {
-        this.libreria = libreria;
-        this.game = new PacManGame(this);
-    }
+	public PacManController(GameUI libreria) {
+		this.libreria = libreria;
+		this.game = new PacManGame(this);
+	}
 
 	@Override
 	public void onButtonPressed(String name) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onCellPressed(int row, int col) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -44,30 +42,30 @@ public class PacManController implements GameController {
 		libreria.configureGrid(18, 32, 1200, 600, false);
 
 		// Dibujar el fondo del mapa
-		for (int r = 0; r < 18; r++) {
-			for (int c = 0; c < 32; c++) {
+		for (int r = 0; r < 17; r++) {
+			for (int c = 0; c < 31; c++) {
 				String nombreImagen = "Mapa_r" + (r + 1) + "_c" + (c + 1);
 				libreria.setCellBackgroundImage(r, c, nombreImagen);
+				if (game.hayPunto(r, c)) {
+					libreria.setCellObjectImage(r, c, "puntoPac");
+				}
 			}
 		}
+
 		libreria.setCellObjectImage(10, 15, "pacman_arriba");
 		
-		
 		// Vincular las teclas del teclado
-				libreria.bindKey("W", "MoverArriba");
-				libreria.bindKey("S", "MoverAbajo");
-				libreria.bindKey("A", "MoverIzquierda");
-				libreria.bindKey("D", "MoverDerecha");
-				libreria.bindKey("P", "Mover");
-				libreria.executeLater(new Runnable() {
-					@Override
-					public void run() {
-						game.start(); // Esto inicia el movimiento automático repetido
-					}
-				}, 4500);
-			}
+		libreria.bindKey("W", "MoverArriba");
+		libreria.bindKey("S", "MoverAbajo");
+		libreria.bindKey("A", "MoverIzquierda");
+		libreria.bindKey("D", "MoverDerecha");
+		libreria.bindKey("P", "Mover");
+		libreria.playSound("Pacman_Introduction");
+		
+		libreria.executeLater(new StarteadorDeGame(game), 4500);
+	}
 
-	public void dibujarPacman(int filas, int columnas, int direccion) {
+	public void dibujarPacman(int fila, int columna, int direccion) {
 		String pacmanImg = "pacman_arriba";
 		if (direccion == 0) {
 			pacmanImg = "pacman_arriba";
@@ -78,17 +76,35 @@ public class PacManController implements GameController {
 		} else if (direccion == 3) {
 			pacmanImg = "pacman_izquierda";
 		}
-		libreria.setCellObjectImage(filas, columnas, pacmanImg);
+		libreria.setCellObjectImage(fila, columna, pacmanImg);
 	}
 
-	public void borrarPacman(int filas, int columnas) {
-		libreria.clearCellObjectImage(filas, columnas);
+
+	public void borrarPacman(int fila, int columna) {
+		libreria.clearCellObjectImage(fila, columna);
 	}
 
-	public void executeRepeatedly(Runnable r, int ms) {
-		libreria.executeRepeatedly(r, ms);
+	public String executeRepeatedly(Runnable r, int ms) {
+		return libreria.executeRepeatedly(r, ms);
 	}
+
 	public void dibujarFruta(int fila, int columna, String nombreFruta) {
-	    libreria.setCellObjectImage(fila, columna, nombreFruta);
+		libreria.setCellObjectImage(fila, columna, nombreFruta);
 	}
+
+	public void stopLoop(String id) {
+		libreria.stopLoop(id);
+	}
+
+
+	public void borrarFantasma(int fila, int columna) {
+		libreria.clearCellObjectImage(fila, columna);
+		
+	}
+
+	public void dibujarFantasma(int fila, int columna, String imagen) {
+		libreria.setCellObjectImage(fila, columna, imagen);
+	}
+
+
 }
