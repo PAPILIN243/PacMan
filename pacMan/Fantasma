@@ -8,6 +8,8 @@ public class Fantasma {
 	private int direccion = 0; // 0= arriba, 1= derecha, 2= abajo, 3= izquierda
 	private int color = 0; // 0=rojo, 1=rosa, 2=celeste, 3=naranja
 	private PacManGame game;
+	private String idDelAvanzadorf;
+
 	private Random rnd = new Random();
 
 	public Fantasma(int fila, int columna, int direccion, int color, PacManGame game) {
@@ -39,11 +41,25 @@ public class Fantasma {
 	}
 
 	public void girar() {
+		int i = 0;
+		if(game.puedoIrAhi(fila, columna)) {
+		i=rnd.nextInt(4);
+		if(direccion==i) {
+			if(i==3) {
+				i=1;
+			} else {
+				i=rnd.nextInt(4);
+			}
+			i=direccion;
+	
+		
+		game.puedoIrAhi(fila, columna);
+		}
+		direccion=i;
 		//TODO Ver en las tres direcciones si es que puede avanzar hacia ahí
 		//Entre todas donde pueda, seleccionar aleatoriamente
-		direccion = rnd.nextInt(4);
 		dibujar();
-	}
+	}}
 
 	public void avanzarFantasma() {
 		game.borrarFantasma(fila, columna);
@@ -75,13 +91,17 @@ public class Fantasma {
 				columna--;
 			}
 		} else {
-			throw new IllegalStateException("");
+			throw new IllegalStateException("ValorDeDireccionInvalido");
 		}
 		dibujar();
 	}
 
 	public void comenzarMovimiento() {
-		// TODO Auto-generated method stub
-		
-	}
-}
+		idDelAvanzadorf = game.executeRepeatedly(new AvanzadorDeFantasma(this), 15);
+		}
+	
+	public void dejarDeAvanzar() {
+		game.stopLoop(idDelAvanzadorf);
+	}}
+
+
