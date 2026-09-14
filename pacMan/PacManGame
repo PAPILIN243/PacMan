@@ -14,8 +14,8 @@ public class PacManGame {
 							{0,2,2,2,2,2,0,2,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,2,0,2,2,2,2,2,0},
 							{0,0,0,0,0,2,0,2,2,2,2,0,2,2,2,0,0,2,2,2,0,2,2,2,2,0,2,0,0,0,0,0},
 							{0,0,0,0,0,2,0,0,0,0,2,0,2,2,2,2,2,2,2,2,0,2,0,0,0,0,2,0,0,0,0,0},
-							{0,0,0,0,0,2,0,0,0,0,2,0,2,0,0,0,0,0,0,2,0,2,0,0,0,0,2,0,0,0,0,0},
-							{2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2},
+							{0,0,0,0,0,2,0,0,0,0,2,0,2,2,2,2,2,2,2,2,0,2,0,0,0,0,2,0,0,0,0,0},
+							{2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
 							{0,0,0,0,0,2,0,0,0,0,2,0,2,0,0,0,0,0,0,2,0,2,0,0,0,0,2,0,0,0,0,0},
 							{0,0,0,0,0,2,0,0,0,0,2,0,2,2,2,2,2,2,2,2,0,2,0,0,0,0,2,0,0,0,0,0},
 							{0,0,0,0,0,2,0,2,2,2,2,0,2,0,0,0,0,0,0,2,0,2,2,2,2,0,2,0,0,0,0,0},
@@ -25,10 +25,11 @@ public class PacManGame {
 							{0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0},
 							{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}};
 	private PacMan pacman;
+	private Fantasma fantasma;
 	private PacManController controller;
 	private int score = 0;
 	private List<Fruta> listaFrutas;
-	private Fantasma[] listaFant = new Fantasma[4];
+	private Fantasma[] arrFant = new Fantasma[4];
 	private Random random= new Random();
 
     private int vidas = 3;
@@ -120,9 +121,9 @@ public class PacManGame {
 		}
 	}
 
-	public void sumarPuntaje(int puntos) {
-	    this.puntaje += puntos;
-	    controller.actualizarPuntaje(this.puntaje);
+	public void sumarPuntaje(int score) {
+	    this.score += score;
+	    controller.actualizarPuntaje(this.score);
 	}
 	public void recolectarFruta(Fruta fruta) {
 		controller.borrarPacman(fruta.getFila(), fruta.getColumna());
@@ -191,9 +192,9 @@ public class PacManGame {
 	
 	private void inicializarFantasmas() {
 		for (int i = 0; i < 4; i++) {
-			listaFant[i]=new Fantasma(8, 15+i, 0, i,this);	
-			listaFant[i].dibujar();
-			listaFant[i].comenzarMovimiento();
+			arrFant[i]=new Fantasma(8, 14+i, 0, i,this);	
+			arrFant[i].dibujar();
+			arrFant[i].comenzarMovimiento();
 		}
 	}
 	public void borrarFantasma(int fila, int columna) {
@@ -215,7 +216,51 @@ public class PacManGame {
 
 	public int getScore() {
 		// TODO Auto-generated method stub
-		return 0;
+		return score;
+		
 	}
-   
+		public void verificarColision() {
+		    for (int i = 0; i < arrFant.length; i++) {
+		        if (arrFant[i] != null) {
+		            int ff = arrFant[i].getFilas();
+		            int fc = arrFant[i].getColumnas();        
+		            
+		            if (pacman.getFila() == ff && pacman.getColumna() == fc) {
+		                // 1. Detenemos el movimiento de Pacman y fantasmas inmediatamente
+		                pacman.detenerse();
+		                for (int j = 0; j < arrFant.length; j++) {
+		                    if (arrFant[j] != null) {
+		                        arrFant[j].dejarDeAvanzar();
+		                    }
+		                }
+		                perderVida(); 
+		              
+		                if (vidas > 0) {
+		                    controller.executeLater(new Runnable() {
+		                        @Override
+		                        public void run() {
+		                            start(); 
+		                        }
+		                    }, 3000);
+		                } else {
+		                
+//		                    controller.playSound("game_over"); 
+		                }
+		                
+		                break; 
+		            }
+		        }
+		    }
+		}
+	
+	public void reiniciarPosiciones() {
+		pacman.detenerse();
+	    controller.borrarPacman(pacman.getFila(), pacman.getColumna());
+	    for (int i = 0; i < arrFant.length; i++) {
+	        if (arrFant[i] != null) {
+	            arrFant[i].dejarDeAvanzar();
+	            controller.borrarFantasma(arrFant[i].getFilas(), arrFant[i].getColumnas());
+	        }
+	    }
+	}
 }
