@@ -44,12 +44,13 @@ public class PacManController implements GameController {
 		libreria.configureGrid(18, 32, 1200, 600, false);
 
 		// Dibujar el fondo del mapa
-		for (int r = 0; r < 18; r++) {
+		for (int r = 0; r < 17
+				; r++) {
 			for (int c = 0; c < 32; c++) {
 				String nombreImagen = "Mapa_r" + (r + 1) + "_c" + (c + 1);
 				libreria.setCellBackgroundImage(r, c, nombreImagen);
 				if (game.hayPunto(r, c)) {
-					libreria.setCellObjectImage(r, c, "puntoPac");
+					libreria.setCellObjectImage(r,c, "puntoPac");
 				}
 			}
 		}
@@ -66,15 +67,6 @@ public class PacManController implements GameController {
 				libreria.bindKey("D", "MoverDerecha");
 				libreria.bindKey("P", "Mover");
 				libreria.playSound("Pacman_Introduction");
-				libreria.executeLater(new Runnable() {
-					@Override
-					public void run() {
-						game.start(); // Esto inicia el movimiento automático repetido
-					}
-				}, 4500);
-				PacMan p = game.getPacman();
-				dibujarPacman(p.getFilas(), p.getColumnas(), p.getDireccion());
-				//libreria.setCellObjectImage(10, 15, "pacman_derecha");
 				libreria.executeLater(new StarteadorDeGame(game), 4500);
 			}
 
@@ -134,4 +126,13 @@ public class PacManController implements GameController {
 	public void dibujarFantasma(int fila, int columna, String imagen) {
 		libreria.setCellObjectImage(fila, columna, imagen);
 	}
-}
+
+	public void executeLater(Runnable runnable, int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+		
+	}
+	
