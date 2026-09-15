@@ -36,27 +36,23 @@ public class PacManController implements GameController {
 			game.girarDerecha();
 		} else if (command.equals("Mover")) {
 			game.moverPacman();
+		
 		}
 	}
 
 	@Override
 	public void initialiseInterface() {
-		libreria.configureGrid(18, 32, 1200, 600, false);
+		libreria.configureGrid(18, 32, 1200, 560, false);
 
-		// Dibujar el fondo del mapa
-		for (int r = 0; r < 17
-				; r++) {
+		for (int r = 0; r < 18; r++) {
 			for (int c = 0; c < 32; c++) {
 				String nombreImagen = "Mapa_r" + (r + 1) + "_c" + (c + 1);
 				libreria.setCellBackgroundImage(r, c, nombreImagen);
 				if (game.hayPunto(r, c)) {
-					libreria.setCellObjectImage(r,c, "puntoPac");
+					libreria.setCellObjectImage(r, c, "puntoPac");
 				}
 			}
 		}
-		
-		game.dibujarFrutas();
-		game.dibujarVidasIniciales();
 		
 	    actualizarPuntaje(game.getScore());
 	    actualizarVidas(game.getVidas());
@@ -67,11 +63,15 @@ public class PacManController implements GameController {
 				libreria.bindKey("D", "MoverDerecha");
 				libreria.bindKey("P", "Mover");
 				libreria.playSound("Pacman_Introduction");
+				
+				PacMan p = game.getPacman();
+				dibujarPacman(p.getFila(), p.getColumna(), p.getDireccion());
+				// libreria.setCellObjectImage(10, 15, "pacman_derecha");
 				libreria.executeLater(new StarteadorDeGame(game), 4500);
 			}
 
 	public void dibujarVida(int fila, int columna) {
-	    libreria.setCellObjectImage(fila, columna, "Vida"); //poner la de un corazon
+	    libreria.setCellObjectImage(fila, columna, "Vida");
 	}
 	public void cambiarAVidaVacia(int fila, int columna) {
 	    libreria.setCellObjectImage(fila, columna, "Vidavacia"); 
@@ -85,8 +85,14 @@ public class PacManController implements GameController {
 	}
 
 	public void actualizarPuntaje(int puntaje) {
-		// TODO Auto-generated method stub
-	}
+		libreria.setCellText(17, 10, "S");
+	    libreria.setCellText(17, 11, "C");
+	    libreria.setCellText(17, 12, "O");
+	    libreria.setCellText(17, 13, "R");
+	    libreria.setCellText(17, 14, "E");
+	    libreria.setCellText(17, 15, ":");
+	    
+	    libreria.setCellText(17, 17, String.valueOf(puntaje));	}
 
 	public void dibujarPacman(int filas, int columnas, int direccion) {
 		String pacmanImg = "pacman_arriba";
@@ -127,13 +133,19 @@ public class PacManController implements GameController {
 		libreria.setCellObjectImage(fila, columna, imagen);
 	}
 
+	public void programarFinVelocidad(int duracionMs) {
+		libreria.executeLater(new Runnable() {
+	        @Override
+	        public void run() {
+	            game.desactivarVelocidad();
+	        }
+	    }, duracionMs);
+	}
+	public void mostrarMensajeTemporal(String mensaje) {
+	    libreria.showTemporaryMessage(mensaje);
+	}
 	public void executeLater(Runnable runnable, int i) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-		
-	}
-	
-
+}
