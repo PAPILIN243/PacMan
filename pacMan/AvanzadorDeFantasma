@@ -1,0 +1,16 @@
+package edu.upb.lp.game.pacMan;
+
+public class AvanzadorDeFantasma implements Runnable {
+ private Fantasma fantasma;
+
+ 
+ public AvanzadorDeFantasma(Fantasma fantasma) {
+	this.fantasma = fantasma;
+}
+
+
+ @Override
+ public void run() {
+	 fantasma.avanzarFantasma();
+ }
+}
