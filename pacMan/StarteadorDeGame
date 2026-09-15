@@ -1,0 +1,17 @@
+package edu.upb.lp.game.pacMan;
+
+public class StarteadorDeGame implements Runnable {
+	private PacManGame game;
+	
+	
+	public StarteadorDeGame(PacManGame game) {
+		this.game = game;
+	}
+
+
+	@Override
+	public void run() {
+		game.start();
+	}
+
+}
