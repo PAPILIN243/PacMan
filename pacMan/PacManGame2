@@ -35,15 +35,15 @@ public class PacManGame {
 	private Fantasma[] arrFant = new Fantasma[4];
 	private Random random = new Random();
 
-	private int vidas = 3;
+	private int vidas = 1;
 
-	private int[][] casillasVidas = { { 17, 1 }, { 17, 2 }, { 17, 3 } };
+	private int[][] casillasVidas = { { 17, 0 } };
 
 	private int contadorTiempoFruta = 0;
 	private int intervaloTiempoFruta = 30; // veces se crearia una fruta
 	private int maxFrutasSimultaneas = 3;
 	private boolean velocidadAumentada = false;
-	private int contadorDePuntos=338;
+	private int contadorDePuntos = 338;
 
 	public PacManGame(PacManController controller) {
 		this.controller = controller;
@@ -82,7 +82,11 @@ public class PacManGame {
 	}
 
 	private void victoria() {
-		stopLoop(id);		
+		pacman.detenerse();
+		for (Fantasma f : arrFant) {
+			// foreach
+			f.dejarDeAvanzar();
+		}
 	}
 
 	public void borrarPacman(int filas, int columnas) {
@@ -125,12 +129,7 @@ public class PacManGame {
 		dibujarFrutas(); // inicio dle juego
 		inicializarFantasmas();
 		dibujarVidasIniciales();
-		executeRepeatedly(new Runnable() {
-			@Override
-			public void run() {
-				actualizarAparicionFrutaPorTiempo();
-			}
-		}, 300);
+		executeRepeatedly(new ActualizadorDeFrutaPorTiempo(this), 4500);
 	}
 
 	public void dibujarFrutas() {
@@ -208,7 +207,7 @@ public class PacManGame {
 			} else if (tipo == 2) {
 				nuevaFruta = new Manzana(f, c);
 			} else if (tipo == 3) {
-				nuevaFruta = new Uva(f, c);
+				nuevaFruta = new UvaPodrida(f, c);
 			}
 
 			listaFrutas.add(nuevaFruta);
@@ -253,7 +252,7 @@ public class PacManGame {
 
 	public void borrarFantasma(int fila, int columna) {
 		if (hayPunto(fila, columna)) {
-			controller.dibujarPunto(fila,columna);
+			controller.dibujarPunto(fila, columna);
 		} else {
 			controller.borrarFantasma(fila, columna);
 		}
@@ -277,11 +276,12 @@ public class PacManGame {
 		return this.score;
 	}
 
-	public void activarVelocidadTemporal(int duracionMs) {
+    public void activarVelocidadTemporal(int duracionMs) {
 		this.velocidadAumentada = true;
 		controller.programarFinVelocidad(duracionMs);
 
 	}
+//	public void 
 
 	public void desactivarVelocidad() {
 		this.velocidadAumentada = false;
@@ -302,6 +302,9 @@ public class PacManGame {
 				int fc = arrFant[i].getColumnas();
 
 				if (pacman.getFila() == ff && pacman.getColumna() == fc) {
+//					if (fantasma.estaAsustado()) {
+					// TODO resetear al fantasma
+				} else {
 					pacman.detenerse();
 					for (int j = 0; j < arrFant.length; j++) {
 						if (arrFant[j] != null) {
@@ -327,6 +330,19 @@ public class PacManGame {
 				controller.borrarFantasma(arrFant[i].getFilas(), arrFant[i].getColumnas());
 			}
 		}
+	}
+
+	public void duracionPoder(int duracionMs) {
+		this.velocidadAumentada= true;
+		controller.programarFinVelocidad(duracionMs);
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void ejecutarPoder() {
+		controller.ponerTodoNegro();
+		// TODO Auto-generated method stub
+		
 	}
 
 }
